@@ -17,8 +17,16 @@ public class Collision {
      * @param c2 círculo 2
      * @return true se há colisão ou false, do contrário.
      */
-    public static final boolean circlesOverlap(Circle c1, Circle c2) {
-        return false;
+    public static final boolean circlesOverlap(Circle c1, Circle c2){ 
+        // Calcula a distância entre o centro dos dois círculos
+        float Distance = (c2.x - c1.x)*(c2.x - c1.x) + (c2.y - c1.y)*(c2.y - c1.y);// A raíz da fórmula foi eliminada para diminuir o custo da operação
+        // Calcula a soma dos raios dos dois círculos
+        float Radius = (c1.radius + c2.radius) * (c1.radius + c2.radius); // Elevado ao quadrado para eliminar a raiz
+        // Verifica se houve colisão
+        if (Distance > Radius)
+            return false;
+        else
+            return true;
     }
 
     /**
@@ -32,7 +40,10 @@ public class Collision {
     private static boolean rangesIntersect(
             float min1, float max1,
             float min2, float max2) {
-        return false;
+        if ( ( (min1 >= min2) && (min1 <= max2) ) || ( (min2 >= min1) && (min2 <= max1) ) )
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -44,7 +55,10 @@ public class Collision {
      * @return true se há colisão ou false, do contrário.
      */
     public static final boolean rectsOverlap(Rectangle r1, Rectangle r2) {
-        return false;
+        if (rangesIntersect(r1.x, r1.x + r1.width, r2.x, r2.x + r2.width) && rangesIntersect(r1.y, r1.y + r1.height, r2.y, r2.y + r2.height))
+            return true;
+        else
+            return false;
     }
 
 }
